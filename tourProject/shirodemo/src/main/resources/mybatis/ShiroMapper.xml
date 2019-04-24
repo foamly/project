@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mx.mapper.ShiroDao">
+    <resultMap id="queryMap" type="com.mx.model.UserBean">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <collection property="roleBean" ofType="com.mx.model.RoleBean">
+            <id column="role_id" property="roleId"/>
+            <result column="role_name" property="roleName"/>
+            <collection property="permissionBean" ofType="com.mx.model.PermissionBean">
+                <id column="permission_id" property="permissionId"/>
+                <result column="permission_name" property="permissionName"/>
+                <result column="permission_url" property="permissionUrl"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="queryUserByName" resultMap="queryMap" parameterType="string">
+        select u.*,r.*,p.* from t_user u
+            LEFT JOIN t_user_role ur on ur.user_id = u.user_id
+            LEFT JOIN t_role r on r.role_id = ur.role_id
+            LEFT JOIN t_role_permission rp on rp.role_id = r.role_id
+            LEFT JOIN t_permission p on p.permission_pid = rp.permission_id
+              where u.user_name = #{userName}
+    </select>
+</mapper>

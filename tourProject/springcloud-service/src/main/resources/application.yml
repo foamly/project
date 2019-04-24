@@ -1,0 +1,37 @@
+server:
+  port: 8383
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    instance-id: web-dept8083
+  prefer-ip-address: true
+spring:
+  application:
+    name: service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tour?characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+
+    thymeleaf:
+      encoding: UTF-8
+      servlet:
+        content-type: text/html
+info:
+  app.name: web
+  company.name: www.jk.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
